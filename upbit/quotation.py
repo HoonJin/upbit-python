@@ -1,5 +1,6 @@
 import requests
 from urllib.parse import urljoin
+import logging
 
 
 class Quotation:
@@ -41,9 +42,10 @@ class Quotation:
         return self.__headers['Remaining-Req']
 
     def __get(self, path: str, params: dict=None):
-        res = requests.get(urljoin(self.__host, path), params=params)
-        if res.status_code in [200, 201]:
-            self.__headers = res.headers
-            return res.json()
+        r = requests.get(urljoin(self.__host, path), params=params)
+        if r.status_code in [200, 201]:
+            self.__headers = r.headers
+            return r.json()
         else:
-            raise Exception("request_to_upbit_failed")
+            logging.error(f"invalid_status_code: status_code: {r.status_code}, headers: {r.headers} body: {r.text}")
+            raise Exception("invalid_status_code")
