@@ -1,11 +1,10 @@
+from .const import *
 import requests
 from urllib.parse import urljoin
 import logging
 
 
 class Quotation:
-    __DEFAULT_COUNT = 10
-
     def __init__(self):
         self.__host = 'https://api.upbit.com/v1/'
 
@@ -14,7 +13,7 @@ class Quotation:
         return self.__get('market/all')
 
     # https://docs.upbit.com/v1.0.1/reference#%EB%B6%84minute-%EC%BA%94%EB%93%A4-1
-    def candles_minutes(self, market: str, unit=1, to=None, count=__DEFAULT_COUNT):
+    def candles_minutes(self, market: str=Order.DEFAULT_MARKET, unit=1, to=None, count=Order.DEFAULT_COUNT):
         return self.__get(f'candles/minutes/{unit}', {
             'market': market,
             'to': to,
@@ -22,7 +21,7 @@ class Quotation:
         })
 
     # https://docs.upbit.com/v1.0.1/reference#%EB%8B%B9%EC%9D%BC-%EC%B2%B4%EA%B2%B0-%EB%82%B4%EC%97%AD
-    def trade_ticks(self, market: str, to=None, count=__DEFAULT_COUNT, cursor=None):
+    def trade_ticks(self, market: str=Order.DEFAULT_MARKET, to=None, count=Order.DEFAULT_COUNT, cursor=None):
         return self.__get('trades/ticks', {
             'market': market,
             'to': to,
