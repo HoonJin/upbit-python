@@ -8,7 +8,7 @@ setup(
     url='http://github.com/Hoonjin/upbit-python/',
     author='Daniel Ji',
     author_email='bwjhj1030@gmail.com',
-    install_requires=['requests', 'jwt'],
+    install_requires=['requests', 'PyJWT'],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

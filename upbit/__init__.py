@@ -1,4 +1,5 @@
 from .quotation import Quotation
+from .exchange import Exchange
 
 
 __quotation = Quotation()
