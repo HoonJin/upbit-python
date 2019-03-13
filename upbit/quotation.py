@@ -9,7 +9,7 @@ class Quotation:
         self.__host = 'https://api.upbit.com/v1/'
 
     # https://docs.upbit.com/v1.0.1/reference#%EC%8B%9C%EC%84%B8-%EC%A2%85%EB%AA%A9-%EC%A1%B0%ED%9A%8C
-    def market(self):
+    def market_all(self):
         return self.__get('market/all')
 
     # https://docs.upbit.com/v1.0.1/reference#%EB%B6%84minute-%EC%BA%94%EB%93%A4-1
@@ -21,7 +21,7 @@ class Quotation:
         })
 
     # https://docs.upbit.com/v1.0.1/reference#%EB%8B%B9%EC%9D%BC-%EC%B2%B4%EA%B2%B0-%EB%82%B4%EC%97%AD
-    def trade_ticks(self, market: str=Order.DEFAULT_MARKET, to=None, count=Order.DEFAULT_COUNT, cursor=None):
+    def trades_ticks(self, market: str=Order.DEFAULT_MARKET, to=None, count=Order.DEFAULT_COUNT, cursor=None):
         return self.__get('trades/ticks', {
             'market': market,
             'to': to,
