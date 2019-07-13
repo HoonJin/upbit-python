@@ -40,10 +40,10 @@ class Quotation:
     def __get(self, path: str, params: dict = None, headers: dict = None):
         r = requests.get(urljoin(self.host, path), params=params, headers=headers)
         if r.status_code in [200, 201]:
-            return r.json()
+            pass
         else:
-            logging.error(f"path: {path}: status_code: {r.status_code}, headers: {r.headers} body: {r.text}")
-            raise Exception("invalid_status_code")
+            logging.error(f"GET /v1/{path}: status_code: {r.status_code}, body: {r.text}, headers: {r.headers}")
+        return r.json()
 
     @property
     def host(self):

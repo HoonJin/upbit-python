@@ -1,6 +1,5 @@
 import hashlib
 import logging
-import time
 import uuid
 from urllib.parse import urlencode, urljoin
 
@@ -79,26 +78,20 @@ class Exchange(Quotation):
         return {'Authorization': f'Bearer {self.__make_token(query)}'}
 
     def __post(self, path: str, payload: dict = None, headers: dict = None):
-        r = requests.get(urljoin(self.host, path), data=payload, headers=headers)
+        r = requests.post(urljoin(self.host, path), data=payload, headers=headers)
         if r.status_code in [200, 201]:
             self.__headers = r.headers
-            return r.json()
         else:
-            logging.error(f"path: {path}: status_code: {r.status_code}, headers: {r.headers} body: {r.text}")
-            raise Exception("invalid_status_code")
+            logging.error(f"POST /v1/{path}: status_code: {r.status_code}, body: {r.text}, headers: {r.headers}")
+        return r.json()
 
     def __delete(self, path: str, params: dict = None, headers: dict = None):
         r = requests.delete(urljoin(self.host, path), params=params, headers=headers)
         if r.status_code in [200, 201]:
             self.__headers = r.headers
-            return r.json()
         else:
-            logging.error(f"path: {path}: status_code: {r.status_code}, headers: {r.headers} body: {r.text}")
-            raise Exception("invalid_status_code")
+            logging.error(f"DELETE /v1/{path}: status_code: {r.status_code}, body: {r.text}, headers: {r.headers}")
+        return r.json()
 
     def __get(self, path: str, params: dict = None, headers: dict = None):
         return self._Quotation__get(path, params, headers)
-
-    @property
-    def nonce(self):
-        return int(time.time() * 1000)
